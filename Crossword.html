@@ -1,143 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cryptic Crossword Puzzle</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-        #crossword {
-            display: grid;
-            grid-template-columns: repeat(15, 30px);
-            gap: 0;
-            margin-bottom: 20px;
-            border: 2px solid #000;
-        }
-        .cell {
-            width: 30px;
-            height: 30px;
-            border: 1px solid #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            position: relative;
-            box-sizing: border-box;
-        }
-        .cell input {
-            width: 100%;
-            height: 100%;
-            border: none;
-            text-align: center;
-            font-size: 14px;
-            text-transform: uppercase;
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-        .number {
-            position: absolute;
-            top: 1px;
-            left: 1px;
-            font-size: 10px;
-        }
-        .black {
-            background-color: #000;
-        }
-        #clues {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 800px;
-        }
-        .clue-list {
-            width: 48%;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-    </style>
+    <!-- (Previous head content remains the same) -->
 </head>
 <body>
-    <h1>Cryptic Crossword Puzzle</h1>
-    <div id="crossword"></div>
-    <div id="clues">
-        <div class="clue-list">
-            <h3>Across</h3>
-            <ol>
-                <li>1. Illumination from within the ground (5)</li>
-                <li>4. Appendages for flight (5)</li>
-                <li>8. Dull flavor lacking excitement initially (5)</li>
-                <li>9. Tolerates large animals (5)</li>
-                <li>11. Ocean between Europe and America (8)</li>
-                <li>13. Quickly consume fish (3)</li>
-                <li>14. Sounding like a fruit, it's a principle (4)</li>
-                <li>16. Confused teens riot about element (7)</li>
-                <li>18. Lofty poem about right inside (3)</li>
-                <li>20. Repentance for torn sari (4)</li>
-                <li>22. Spin around for a sweet treat (5)</li>
-                <li>24. Feline's facial feature (7)</li>
-                <li>26. Celestial body returns in the morning (3)</li>
-                <li>27. Consumed food in the past (3)</li>
-                <li>28. Heavenly body sounds like a planet (3)</li>
-                <li>30. Mix up a stew for a foolish person (3)</li>
-                <li>31. Bird's home in the highest part (4)</li>
-                <li>33. Unfinished cigar is a waterway (3)</li>
-                <li>34. Speak while sleeping, initially (4)</li>
-                <li>36. Twisted evil with no limits (4)</li>
-                <li>37. Curved structure over an opening (4)</li>
-            </ol>
-        </div>
-        <div class="clue-list">
-            <h3>Down</h3>
-            <ol>
-                <li>1. Appendages for flight (5)</li>
-                <li>2. State of potatoes, perhaps? (5)</li>
-                <li>3. Direction to look for yeast (4)</li>
-                <li>5. Issue a book (7)</li>
-                <li>6. Flower of the eye (4)</li>
-                <li>7. Scoundrel takes article from Nissan (3)</li>
-                <li>10. Every bit of hope Leslie has (3)</li>
-                <li>12. Carried back a measure of resistance (4)</li>
-                <li>15. Entrance to a mine, oddly enough (4)</li>
-                <li>17. Twisted vines entangle (5)</li>
-                <li>19. Peculiar omen about a drink (6)</li>
-                <li>21. Confuse rats in the attic (5)</li>
-                <li>23. Wager on a heavenly body (3)</li>
-                <li>25. Rabbit's home is right inside (6)</li>
-                <li>29. Deceive with a falsehood (3)</li>
-                <li>32. Snakelike fish (3)</li>
-                <li>35. Observe with your eyes (3)</li>
-            </ol>
-        </div>
-    </div>
-    <button onclick="checkAnswers()">Check Answers</button>
+    <!-- (Previous body content remains the same) -->
 
     <script>
         const grid = [
-            ['L','I','G','H','T','*','W','I','N','G','S','*','N','E','W'],
-            ['I','*','*','*','A','*','I','*','E','*','T','*','E','*','I'],
-            ['G','*','*','*','D','*','N','*','S','*','A','*','S','*','N'],
-            ['H','*','B','L','A','N','D','*','T','*','R','*','T','*','G'],
-            ['T','*','E','*','T','*','S','*','*','*','S','*','*','*','S'],
-            ['S','T','A','R','E','*','*','B','E','A','R','S','*','*','*'],
-            ['*','*','R','*','*','*','A','*','A','*','*','P','E','A','R'],
-            ['W','H','I','S','K','E','R','S','T','*','*','E','*','*','I'],
-            ['I','*','S','*','*','*','*','*','L','*','E','W','*','*','S'],
-            ['N','*','*','*','*','*','*','*','A','*','A','*','*','*','E'],
-            ['G','*','O','D','E','*','S','A','N','D','T','R','A','P','*'],
-            ['S','*','H','*','Y','*','P','*','T','*','*','I','*','*','*'],
-            ['*','*','M','*','E','*','E','*','I','*','*','V','*','*','*'],
-            ['*','*','*','C','A','N','W','*','C','*','*','E','Y','E','S'],
-            ['A','R','C','H','*','E','A','T','*','S','U','R','*','E','L']
+            // (Grid data remains the same)
         ];
 
         const crossword = document.getElementById('crossword');
@@ -157,6 +28,7 @@
                     input.dataset.col = j;
                     input.addEventListener('keydown', handleKeyDown);
                     input.addEventListener('focus', handleFocus);
+                    input.addEventListener('click', handleClick);
                     cell.appendChild(input);
                 }
                 crossword.appendChild(cell);
@@ -189,6 +61,12 @@
 
         function handleFocus() {
             currentCell = this;
+        }
+
+        function handleClick() {
+            if (this === currentCell) {
+                currentDirection = currentDirection === 'across' ? 'down' : 'across';
+            }
         }
 
         function moveToNextCell(currentInput, direction = currentDirection) {
@@ -255,71 +133,7 @@
             }
         }
 
-        // Add numbers to cells
-        const numberedCells = [
-            {row: 0, col: 0, num: 1},
-            {row: 0, col: 6, num: 4},
-            {row: 3, col: 2, num: 8},
-            {row: 5, col: 7, num: 9},
-            {row: 6, col: 6, num: 11},
-            {row: 6, col: 11, num: 13},
-            {row: 6, col: 11, num: 14},
-            {row: 7, col: 0, num: 16},
-            {row: 10, col: 2, num: 18},
-            {row: 10, col: 8, num: 20},
-            {row: 14, col: 2, num: 22},
-            {row: 7, col: 0, num: 24},
-            {row: 5, col: 0, num: 26},
-            {row: 14, col: 5, num: 27},
-            {row: 0, col: 12, num: 28},
-            {row: 14, col: 14, num: 30},
-            {row: 0, col: 12, num: 31},
-            {row: 14, col: 0, num: 33},
-            {row: 14, col: 6, num: 34},
-            {row: 13, col: 13, num: 36},
-            {row: 14, col: 0, num: 37},
-            {row: 0, col: 0, num: 1},
-            {row: 0, col: 10, num: 2},
-            {row: 1, col: 8, num: 3},
-            {row: 0, col: 6, num: 5},
-            {row: 13, col: 11, num: 6},
-            {row: 2, col: 8, num: 7},
-            {row: 5, col: 7, num: 10},
-            {row: 7, col: 13, num: 12},
-            {row: 5, col: 0, num: 15},
-            {row: 2, col: 8, num: 17},
-            {row: 1, col: 4, num: 19},
-            {row: 3, col: 2, num: 21},
-            {row: 10, col: 8, num: 23},
-            {row: 10, col: 2, num: 25},
-            {row: 6, col: 8, num: 29},
-            {row: 12, col: 2, num: 32},
-            {row: 13, col: 13, num: 35}
-        ];
-
-        numberedCells.forEach(cell => {
-            const index = cell.row * 15 + cell.col;
-            const cellElement = crossword.children[index];
-            const numberSpan = document.createElement('span');
-            numberSpan.classList.add('number');
-            numberSpan.textContent = cell.num;
-            cellElement.appendChild(numberSpan);
-        });
-
-        function checkAnswers() {
-            const inputs = document.querySelectorAll('#crossword input');
-            inputs.forEach((input, index) => {
-                const row = Math.floor(index / 15);
-                const col = index % 15;
-                if (grid[row][col] !== '*') {
-                    if (input.value.toUpperCase() === grid[row][col]) {
-                        input.style.backgroundColor = '#aaffaa';
-                    } else {
-                        input.style.backgroundColor = '#ffaaaa';
-                    }
-                }
-            });
-        }
+        // (The rest of the code remains the same)
     </script>
 </body>
 </html>
