@@ -64,6 +64,13 @@
             padding: 10px 20px;
             font-size: 16px;
         }
+        ul {
+            padding-left: 20px;
+            list-style-type: none;
+        }
+        ul ul {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -72,51 +79,51 @@
     <div id="clues">
         <div class="clue-list">
             <h3>Across</h3>
-            <ol>
-                <li>1. Illumination from within the ground (5)</li>
-                <li>4. Appendages for flight (5)</li>
-                <li>8. Dull flavor lacking excitement initially (5)</li>
-                <li>9. Tolerates large animals (5)</li>
-                <li>11. Classic gaming company mixed up a rat (5)</li>
-                <li>13. Quickly consume fish (3)</li>
-                <li>14. Flower with thorns (4)</li>
-                <li>16. Blossoms from the ground (7)</li>
-                <li>18. Bubbly cleanser (4)</li>
-                <li>20. Repentance for torn sari (4)</li>
-                <li>22. Spin around for a sweet treat (5)</li>
-                <li>24. Feline's facial feature (7)</li>
-                <li>26. Celestial body returns in the morning (3)</li>
-                <li>28. Heavenly body sounds like a planet (3)</li>
-                <li>31. Bird's home in the highest part (4)</li>
-                <li>33. Tree in the elm family (3)</li>
-                <li>34. Speak while sleeping, initially (3)</li>
-                <li>36. Twisted evil with no limits (4)</li>
-                <li>37. Longs for and turns towards water (5,3)</li>
-            </ol>
+            <ul>
+                <ul>1. Illumination from within the ground (5)</ul>
+                <ul>4. Appendages for flight (5)</ul>
+                <ul>8. Dull flavor lacking excitement initially (5)</ul>
+                <ul>9. Tolerates large animals (5)</ul>
+                <ul>11. Classic gaming company mixed up a rat (5)</ul>
+                <ul>13. Quickly consume fish (3)</ul>
+                <ul>14. Flower with thorns (4)</ul>
+                <ul>16. Blossoms from the ground (7)</ul>
+                <ul>18. Bubbly cleanser (4)</ul>
+                <ul>20. Repentance for torn sari (4)</ul>
+                <ul>22. Spin around for a sweet treat (5)</ul>
+                <ul>24. Feline's facial feature (7)</ul>
+                <ul>26. Celestial body returns in the morning (3)</ul>
+                <ul>28. Heavenly body sounds like a planet (3)</ul>
+                <ul>31. Bird's home in the highest part (4)</ul>
+                <ul>33. Tree in the elm family (3)</ul>
+                <ul>34. Speak while sleeping, initially (3)</ul>
+                <ul>36. Twisted evil with no limits (4)</ul>
+                <ul>37. Longs for and turns towards water (5,3)</ul>
+            </ul>
         </div>
         <div class="clue-list">
             <h3>Down</h3>
-            <ol>
-                <li>1. Writing instruments for the penitentiary (4)</li>
-                <li>2. State of potatoes, perhaps? (5)</li>
-                <li>3. Direction to look for yeast (4)</li>
-                <li>5. Issue a book (7)</li>
-                <li>6. Flower of the eye (4)</li>
-                <li>7. Scoundrel takes article from Nissan (3)</li>
-                <li>10. Every bit of hope Leslie has (3)</li>
-                <li>12. Carried back a measure of resistance (4)</li>
-                <li>15. Entrance to a mine, oddly enough (4)</li>
-                <li>17. Twisted vines entangle (5)</li>
-                <li>19. Peculiar omen about a drink (6)</li>
-                <li>21. Confuse rats in the attic (5)</li>
-                <li>23. Wager on a heavenly body (3)</li>
-                <li>24. Facial hair on the chin (7)</li>
-                <li>25. Rabbit's home is right inside (6)</li>
-                <li>29. Deceive with a falsehood (3)</li>
-                <li>31. Lyrical poems in disarray (4)</li>
-                <li>32. Snakelike fish (3)</li>
-                <li>35. Observe with your eyes (3)</li>
-            </ol>
+            <ul>
+                <ul>1. Writing instruments for the penitentiary (4)</ul>
+                <ul>2. State of potatoes, perhaps? (5)</ul>
+                <ul>3. Direction to look for yeast (4)</ul>
+                <ul>5. Issue a book (7)</ul>
+                <ul>6. Flower of the eye (4)</ul>
+                <ul>7. Scoundrel takes article from Nissan (3)</ul>
+                <ul>10. Every bit of hope Leslie has (3)</ul>
+                <ul>12. Carried back a measure of resistance (4)</ul>
+                <ul>15. Entrance to a mine, oddly enough (4)</ul>
+                <ul>17. Twisted vines entangle (5)</ul>
+                <ul>19. Peculiar omen about a drink (6)</ul>
+                <ul>21. Confuse rats in the attic (5)</ul>
+                <ul>23. Wager on a heavenly body (3)</ul>
+                <ul>24. Facial hair on the chin (7)</ul>
+                <ul>25. Rabbit's home is right inside (6)</ul>
+                <ul>29. Deceive with a falsehood (3)</ul>
+                <ul>31. Lyrical poems in disarray (4)</ul>
+                <ul>32. Snakelike fish (3)</ul>
+                <ul>35. Observe with your eyes (3)</ul>
+            </ul>
         </div>
     </div>
     <button onclick="checkAnswers()">Check Answers</button>
@@ -313,19 +320,28 @@
         });
 
         function checkAnswers() {
-            const inputs = document.querySelectorAll('#crossword input');
-            inputs.forEach((input, index) => {
-                const row = Math.floor(index / 15);
-                const col = index % 15;
-                if (grid[row][col] !== '*') {
-                    if (input.value.toUpperCase() === grid[row][col]) {
-                        input.style.backgroundColor = '#aaffaa';
-                    } else {
-                        input.style.backgroundColor = '#ffaaaa';
-                    }
-                }
-            });
+    const inputs = document.querySelectorAll('#crossword input');
+    console.log('Total inputs:', inputs.length);
+    inputs.forEach((input, index) => {
+        const row = Math.floor(index / 15);
+        const col = index % 15;
+        console.log(`Checking cell at row ${row}, col ${col}`);
+        if (grid[row][col] !== '*') {
+            if (input.value === '') {
+                input.style.backgroundColor = '#ffffaa'; // Light yellow for empty cells
+                console.log(`Empty cell at row ${row}, col ${col}`);
+            } else if (input.value.toUpperCase() === grid[row][col]) {
+                input.style.backgroundColor = '#aaffaa'; // Light green for correct answers
+                console.log(`Correct answer at row ${row}, col ${col}`);
+            } else {
+                input.style.backgroundColor = '#ffaaaa'; // Light red for incorrect answers
+                console.log(`Incorrect answer at row ${row}, col ${col}`);
+            }
+        } else {
+            console.log(`Black cell at row ${row}, col ${col}`);
         }
+    });
+}
     </script>
 </body>
 </html>
