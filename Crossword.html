@@ -135,37 +135,37 @@
             ['*','*','S','*','*','P','E','A','R','O','S','E','*','*','*'],
             ['F','L','O','W','E','R','S','*','I','*','W','H','I','S','K'],
             ['I','*','*','*','*','O','*','*','V','*','A','*','*','*','E'],
-            ['S','O','A','P','*','U','*','*','E','*','L','*','B','A','Y'],
-            ['H','*','*','*','*','T','*','S','R','*','L','*','*','*','*'],
-            ['*','*','N','E','S','*','*','*','*','*','O','D','E','S','*'],
-            ['*','*','T','*','K','*','E','L','M','*','W','*','A','*','*'],
-            ['*','*','S','*','Y','*','E','*','A','*','S','*','M','*','*'],
-            ['A','R','C','H','*','S','A','W','*','Y','E','A','R','N','S']
+            ['S','O','A','P','*','T','*','*','E','*','L','*','B','A','Y'],
+            ['H','*','*','*','*','H','*','S','R','*','L','*','*','*','*'],
+            ['*','A','T','L','A','N','T','I','S','*','O','D','E','S','*'],
+            ['B','*','E','*','N','*','E','L','M','*','W','*','E','*','S'],
+            ['A','*','*','*','O','*','Y','*','A','*','S','*','E','*','P'],
+            ['Y','E','A','R','N','S','*','S','W','*','*','A','R','C','H']
         ];
 
         const crossword = document.getElementById('crossword');
         let currentDirection = 'across';
         let currentCell = null;
 
-    for (let i = 0; i < grid.length; i++) {
-        for (let j = 0; j < grid[i].length; j++) {
-            const cell = document.createElement('div');
-            cell.classList.add('cell');
-            if (grid[i][j] === '*') {
-                cell.classList.add('black');
-            } else {
-                const input = document.createElement('input');
-                input.maxLength = 1;
-                input.dataset.row = i;
-                input.dataset.col = j;
-                input.addEventListener('keydown', handleKeyDown);
-                input.addEventListener('focus', handleFocus);
-                input.addEventListener('click', handleClick);
-                cell.appendChild(input);
+        for (let i = 0; i < grid.length; i++) {
+            for (let j = 0; j < grid[i].length; j++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                if (grid[i][j] === '*') {
+                    cell.classList.add('black');
+                } else {
+                    const input = document.createElement('input');
+                    input.maxLength = 1;
+                    input.dataset.row = i;
+                    input.dataset.col = j;
+                    input.addEventListener('keydown', handleKeyDown);
+                    input.addEventListener('focus', handleFocus);
+                    input.addEventListener('click', handleClick);
+                    cell.appendChild(input);
+                }
+                crossword.appendChild(cell);
             }
-            crossword.appendChild(cell);
         }
-    }
 
         function handleKeyDown(event) {
             if (event.key === 'Backspace' || event.key === 'Delete') {
@@ -276,34 +276,15 @@
             {row: 7, col: 0, num: 16},
             {row: 9, col: 0, num: 18},
             {row: 9, col: 8, num: 20},
-            {row: 14, col: 2, num: 22},
+            {row: 11, col: 0, num: 22},
             {row: 7, col: 11, num: 24},
-            {row: 4, col: 8, num: 26},
+            {row: 11, col: 0, num: 26},
             {row: 0, col: 12, num: 28},
-            {row: 11, col: 2, num: 31},
+            {row: 12, col: 6, num: 31},
             {row: 12, col: 6, num: 33},
             {row: 14, col: 5, num: 34},
-            {row: 13, col: 11, num: 36},
-            {row: 14, col: 9, num: 37},
-            {row: 0, col: 0, num: 1},
-            {row: 0, col: 10, num: 2},
-            {row: 1, col: 8, num: 3},
-            {row: 0, col: 6, num: 5},
-            {row: 13, col: 11, num: 6},
-            {row: 2, col: 8, num: 7},
-            {row: 4, col: 8, num: 10},
-            {row: 7, col: 9, num: 12},
-            {row: 4, col: 0, num: 15},
-            {row: 2, col: 4, num: 17},
-            {row: 1, col: 4, num: 19},
-            {row: 2, col: 2, num: 21},
-            {row: 9, col: 8, num: 23},
-            {row: 7, col: 11, num: 24},
-            {row: 8, col: 0, num: 25},
-            {row: 6, col: 8, num: 29},
-            {row: 11, col: 10, num: 31},
-            {row: 10, col: 6, num: 32},
-            {row: 13, col: 11, num: 35}
+            {row: 14, col: 11, num: 36},
+            {row: 14, col: 0, num: 37}
         ];
 
         numberedCells.forEach(cell => {
@@ -316,28 +297,28 @@
         });
 
         function checkAnswers() {
-    const inputs = document.querySelectorAll('#crossword input');
-    console.log('Total inputs:', inputs.length);
-    inputs.forEach((input, index) => {
-        const row = Math.floor(index / 15);
-        const col = index % 15;
-        console.log(`Checking cell at row ${row}, col ${col}`);
-        if (grid[row][col] !== '*') {
-            if (input.value === '') {
-                input.style.backgroundColor = '#ffffaa'; // Light yellow for empty cells
-                console.log(`Empty cell at row ${row}, col ${col}`);
-            } else if (input.value.toUpperCase() === grid[row][col]) {
-                input.style.backgroundColor = '#aaffaa'; // Light green for correct answers
-                console.log(`Correct answer at row ${row}, col ${col}`);
-            } else {
-                input.style.backgroundColor = '#ffaaaa'; // Light red for incorrect answers
-                console.log(`Incorrect answer at row ${row}, col ${col}`);
-            }
-        } else {
-            console.log(`Black cell at row ${row}, col ${col}`);
+            const inputs = document.querySelectorAll('#crossword input');
+            console.log('Total inputs:', inputs.length);
+            inputs.forEach((input) => {
+                const row = parseInt(input.dataset.row);
+                const col = parseInt(input.dataset.col);
+                console.log(`Checking cell at row ${row}, col ${col}`);
+                if (grid[row][col] !== '*') {
+                    if (input.value === '') {
+                        input.style.backgroundColor = '#ffffaa'; // Light yellow for empty cells
+                        console.log(`Empty cell at row ${row}, col ${col}`);
+                    } else if (input.value.toUpperCase() === grid[row][col]) {
+                        input.style.backgroundColor = '#aaffaa'; // Light green for correct answers
+                        console.log(`Correct answer at row ${row}, col ${col}`);
+                    } else {
+                        input.style.backgroundColor = '#ffaaaa'; // Light red for incorrect answers
+                        console.log(`Incorrect answer at row ${row}, col ${col}`);
+                    }
+                } else {
+                    console.log(`Black cell at row ${row}, col ${col}`);
+                }
+            });
         }
-    });
-}
     </script>
 </body>
 </html>
