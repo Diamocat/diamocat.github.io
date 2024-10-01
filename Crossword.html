@@ -15,9 +15,8 @@
         #crossword {
             display: grid;
             grid-template-columns: repeat(15, 30px);
-            gap: 0;
-            margin-bottom: 20px;
-            border: 2px solid #000;
+            width: fit-content;
+            margin: 0 auto;
         }
         .cell {
             width: 30px;
@@ -26,9 +25,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 14px;
-            position: relative;
-            box-sizing: border-box;
         }
         .cell input {
             width: 100%;
@@ -151,25 +147,25 @@
         let currentDirection = 'across';
         let currentCell = null;
 
-        for (let i = 0; i < grid.length; i++) {
-            for (let j = 0; j < grid[i].length; j++) {
-                const cell = document.createElement('div');
-                cell.classList.add('cell');
-                if (grid[i][j] === '*') {
-                    cell.classList.add('black');
-                } else {
-                    const input = document.createElement('input');
-                    input.maxLength = 1;
-                    input.dataset.row = i;
-                    input.dataset.col = j;
-                    input.addEventListener('keydown', handleKeyDown);
-                    input.addEventListener('focus', handleFocus);
-                    input.addEventListener('click', handleClick);
-                    cell.appendChild(input);
-                }
-                crossword.appendChild(cell);
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[i].length; j++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            if (grid[i][j] === '*') {
+                cell.classList.add('black');
+            } else {
+                const input = document.createElement('input');
+                input.maxLength = 1;
+                input.dataset.row = i;
+                input.dataset.col = j;
+                input.addEventListener('keydown', handleKeyDown);
+                input.addEventListener('focus', handleFocus);
+                input.addEventListener('click', handleClick);
+                cell.appendChild(input);
             }
+            crossword.appendChild(cell);
         }
+    }
 
         function handleKeyDown(event) {
             if (event.key === 'Backspace' || event.key === 'Delete') {
