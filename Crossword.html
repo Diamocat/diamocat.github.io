@@ -141,6 +141,8 @@
         ];
 
         const crossword = document.getElementById('crossword');
+        let currentDirection = 'across';
+        let currentCell = null;
 
         for (let i = 0; i < grid.length; i++) {
             for (let j = 0; j < grid[i].length; j++) {
@@ -151,9 +153,105 @@
                 } else {
                     const input = document.createElement('input');
                     input.maxLength = 1;
+                    input.dataset.row = i;
+                    input.dataset.col = j;
+                    input.addEventListener('keydown', handleKeyDown);
+                    input.addEventListener('focus', handleFocus);
                     cell.appendChild(input);
                 }
                 crossword.appendChild(cell);
+            }
+        }
+
+        function handleKeyDown(event) {
+            if (event.key === 'Backspace' || event.key === 'Delete') {
+                event.preventDefault();
+                this.value = '';
+                moveToPreviousCell(this);
+            } else if (event.key.length === 1 && event.key.match(/[a-z]/i)) {
+                event.preventDefault();
+                this.value = event.key.toUpperCase();
+                moveToNextCell(this);
+            } else if (event.key === 'ArrowRight') {
+                event.preventDefault();
+                moveToNextCell(this, 'across');
+            } else if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                moveToPreviousCell(this, 'across');
+            } else if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                moveToNextCell(this, 'down');
+            } else if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                moveToPreviousCell(this, 'down');
+            }
+        }
+
+        function handleFocus() {
+            currentCell = this;
+        }
+
+        function moveToNextCell(currentInput, direction = currentDirection) {
+            const row = parseInt(currentInput.dataset.row);
+            const col = parseInt(currentInput.dataset.col);
+            let nextInput;
+
+            if (direction === 'across') {
+                nextInput = document.querySelector(`input[data-row="${row}"][data-col="${col + 1}"]`);
+                if (!nextInput) {
+                    for (let i = 0; i < 15; i++) {
+                        if (i > col && document.querySelector(`input[data-row="${row}"][data-col="${i}"]`)) {
+                            nextInput = document.querySelector(`input[data-row="${row}"][data-col="${i}"]`);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                nextInput = document.querySelector(`input[data-row="${row + 1}"][data-col="${col}"]`);
+                if (!nextInput) {
+                    for (let i = 0; i < 15; i++) {
+                        if (i > row && document.querySelector(`input[data-row="${i}"][data-col="${col}"]`)) {
+                            nextInput = document.querySelector(`input[data-row="${i}"][data-col="${col}"]`);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (nextInput) {
+                nextInput.focus();
+            }
+        }
+
+        function moveToPreviousCell(currentInput, direction = currentDirection) {
+            const row = parseInt(currentInput.dataset.row);
+            const col = parseInt(currentInput.dataset.col);
+            let prevInput;
+
+            if (direction === 'across') {
+                prevInput = document.querySelector(`input[data-row="${row}"][data-col="${col - 1}"]`);
+                if (!prevInput) {
+                    for (let i = 14; i >= 0; i--) {
+                        if (i < col && document.querySelector(`input[data-row="${row}"][data-col="${i}"]`)) {
+                            prevInput = document.querySelector(`input[data-row="${row}"][data-col="${i}"]`);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                prevInput = document.querySelector(`input[data-row="${row - 1}"][data-col="${col}"]`);
+                if (!prevInput) {
+                    for (let i = 14; i >= 0; i--) {
+                        if (i < row && document.querySelector(`input[data-row="${i}"][data-col="${col}"]`)) {
+                            prevInput = document.querySelector(`input[data-row="${i}"][data-col="${col}"]`);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (prevInput) {
+                prevInput.focus();
             }
         }
 
