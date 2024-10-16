@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Communication Progress</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px; /* Slightly increased base font size */
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            text-align: center;
+            max-width: 92%;
+            width: 850px;
+            overflow-y: auto;
+            max-height: 92vh;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 3.2rem; /* Slightly increased from 3rem */
+            margin-bottom: 1.2rem;
+            line-height: 1.2;
+        }
+
+        .main-text {
+            color: #34495e;
+            font-size: 1.5rem; /* Slightly increased from 1.4rem */
+            margin-bottom: 2.2rem;
+            line-height: 1.6;
+        }
+
+        .decoration {
+            width: 120px;
+            height: 6px;
+            background-color: #3498db;
+            margin: 2.5rem auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px; /* Slightly increased padding */
+            background-color: #3498db;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 1.3rem; /* Slightly increased from 1.2rem */
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            margin-top: 1.2rem;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            max-width: 92%;
+            width: 650px;
+            text-align: center;
+            max-height: 82vh;
+            overflow-y: auto;
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 12px;
+            right: 22px;
+            font-size: 30px; /* Slightly increased from 28px */
+            cursor: pointer;
+            color: #2c3e50;
+        }
+
+        ul {
+            text-align: left;
+            padding-left: 35px;
+            font-size: 1.3rem; /* Slightly increased from 1.2rem */
+        }
+
+        .image-container {
+            margin-bottom: 2.5rem;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+
+        .page-arrow {
+            position: fixed;
+            bottom: 25px;
+            background-color: #3498db;
+            color: white;
+            width: 65px; /* Slightly increased from 60px */
+            height: 65px; /* Slightly increased from 60px */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-arrow {
+            left: 25px;
+        }
+
+        .next-arrow {
+            right: 25px;
+        }
+
+        .page-arrow:hover {
+            background-color: #2980b9;
+            transform: scale(1.1);
+        }
+
+        .page-arrow svg {
+            width: 30px; /* Slightly increased from 28px */
+            height: 30px; /* Slightly increased from 28px */
+        }
+
+        .centered-image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.7rem; } /* Slightly increased from 2.5rem */
+            .main-text { font-size: 1.3rem; } /* Slightly increased from 1.2rem */
+            .container { padding: 1.8rem; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2.2rem; } /* Slightly increased from 2rem */
+            .main-text { font-size: 1.2rem; } /* Slightly increased from 1.1rem */
+            .container { 
+                padding: 1.2rem; 
+                max-height: 100vh;
+                border-radius: 0;
+            }
+            .image-container { max-width: 100%; }
+            .page-arrow {
+                width: 55px; /* Slightly increased from 50px */
+                height: 55px; /* Slightly increased from 50px */
+            }
+            .page-arrow svg {
+                width: 26px; /* Slightly increased from 24px */
+                height: 26px; /* Slightly increased from 24px */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Progress, but a long way to go</h1>
+        <div class="decoration"></div>
+        <div class="image-container">
+            <img src="Outlets.png" alt="Research Communication">
+        </div>
+        <p id="initialText" class="main-text">We have caught the attention of management, and academic staff are regularly working with us. We have increased visibility and research communication is now on the three year strategy for the University.</p>
+        <button id="butBtn" class="btn hidden">BUT...</button>
+        <p id="butText" class="main-text hidden">This means that more people across departments want to get involved. However, they have no experience of working with academics, reporting research, understanding misinformation and so on. Also no-one is communicating to each other.</p>
+        <button id="solutionBtn" class="btn hidden">Solution</button>
+    </div>
+    <div id="solutionPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <h2>Solution</h2>
+            <ul>
+                <li>International Research Outreach and Communications (IROC) Unit</li>
+                <br>
+                <img class="centered-image" src="brainstorm.jpeg" alt="Brainstorming session">
+                <br>
+                <li>Policy Guidelines</li>
+                <br>
+                <img class="centered-image" src="guide.jpeg" alt="Policy guidebook">
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const initialText = document.getElementById('initialText');
+        const butBtn = document.getElementById('butBtn');
+        const butText = document.getElementById('butText');
+        const solutionBtn = document.getElementById('solutionBtn');
+        const popup = document.getElementById('solutionPopup');
+
+        initialText.addEventListener('click', () => {
+            butBtn.classList.remove('hidden');
+        });
+
+        butBtn.addEventListener('click', () => {
+            butText.classList.remove('hidden');
+            solutionBtn.classList.remove('hidden');
+        });
+
+        solutionBtn.addEventListener('click', () => {
+            popup.style.display = 'block';
+        });
+
+        function closePopup() {
+            popup.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == popup) {
+                closePopup();
+            }
+        }
+    </script>
+    <a href="Roadmap.html" class="page-arrow back-arrow" aria-label="Go to previous page">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 19L5 12L12 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+    
+    <a href="Questions.html" class="page-arrow next-arrow" aria-label="Go to next page">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+</body>
+</html>

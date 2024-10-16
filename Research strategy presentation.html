@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blunders and Breakthroughs: Crafting a research communication strategy in China</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Avenir', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px; /* Increased base font size */
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 15px; /* Increased border radius */
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1); /* Increased shadow */
+            padding: 3rem; /* Increased padding */
+            text-align: center;
+            max-width: 95%;
+            width: 1000px; /* Increased width */
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 3.5rem; /* Increased font size */
+            margin-bottom: 1.5rem; /* Increased margin */
+            line-height: 1.2;
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 2rem; /* Increased font size */
+            margin-bottom: 2.5rem; /* Increased margin */
+        }
+
+        .author {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-bottom: 1.5rem; /* Increased margin */
+            font-size: 1.2rem; /* Increased font size */
+        }
+
+        .university {
+            color: #16a085;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 1.3rem; /* Increased font size */
+        }
+
+        .decoration {
+            width: 150px; /* Increased width */
+            height: 7px; /* Increased height */
+            background-color: #3498db;
+            margin: 2.5rem auto; /* Increased margin */
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 3rem; /* Increased padding */
+            border-radius: 15px; /* Increased border radius */
+            max-width: 95%;
+            width: 800px; /* Increased width */
+            text-align: center;
+        }
+
+        .popup-content img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 1.5rem; /* Increased margin */
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 32px; /* Increased font size */
+            cursor: pointer;
+            color: #2c3e50;
+        }
+
+        .page-arrow {
+            position: fixed;
+            bottom: 30px; /* Increased bottom position */
+            background-color: #3498db;
+            color: white;
+            width: 70px; /* Increased width */
+            height: 70px; /* Increased height */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0 3px 7px rgba(0,0,0,0.2); /* Increased shadow */
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-arrow {
+            left: 30px; /* Increased left position */
+        }
+
+        .next-arrow {
+            right: 30px; /* Increased right position */
+        }
+
+        .page-arrow:hover {
+            background-color: #2980b9;
+            transform: scale(1.15); /* Increased scale on hover */
+        }
+
+        .page-arrow svg {
+            width: 32px; /* Increased width */
+            height: 32px; /* Increased height */
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; } /* Increased font size */
+            h2 { font-size: 1.6rem; } /* Increased font size */
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; } /* Increased font size */
+            h2 { font-size: 1.3rem; } /* Increased font size */
+            .container { padding: 1.5rem; } /* Increased padding */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Blunders and Breakthroughs:</h1>
+        <h2>Crafting a research communication strategy in China</h2>
+        <div class="decoration"></div>
+        <p class="author">By Dr Catherine Diamond</p>
+        <p class="university" onclick="openPopup()">Xi'an Jiaotong-Liverpool University, Suzhou, China</p>
+    </div>
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <h2>XJTLU: UK-China partnership</h2>
+            <img src="assets/XJTLU world map.png" alt="World map showing XJTLU locations">
+            <p>A joint venture between the University of Liverpool, UK and Xi'an Jiaotong-Liverpool University established in 2006. <br> 
+                <strong>~25,000 students and >1000 academic staff</strong></p>
+        </div>
+    </div>
+
+    <script>
+        function openPopup() {
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        // Close popup when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('popup')) {
+                closePopup();
+            }
+        }
+    </script>
+
+    <a href="assets/Timeline.html" class="page-arrow next-arrow" aria-label="Go to next page">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+    
+</body>
+</html>

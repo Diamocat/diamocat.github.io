@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XJTLU Research Communications Intro</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+            font-family: "Arial", sans-serif;
+        }
+
+        .star-wars-container {
+            position: relative;
+            height: 100%;
+            color: #feda4a;
+            font-weight: 600;
+            letter-spacing: 2px;
+            line-height: 1.5;
+            perspective: 400px;
+            text-align: justify;
+            overflow: hidden;
+        }
+
+        .crawl-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            transform-origin: 50% 100%;
+            animation: crawl 60s linear;
+        }
+
+        .crawl-content > .title {
+            text-align: center;
+        }
+
+        .crawl-content > .title h1 {
+            margin: 0 0 0.25em;
+            font-size: 1.5em;
+        }
+
+        .crawl-content p {
+            margin: 0 0 1em;
+            font-size: 1em;
+        }
+        .next-page-arrow {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+.next-page-arrow:hover {
+    background-color: #2980b9;
+    transform: scale(1.1);
+}
+
+.next-page-arrow svg {
+    width: 24px;
+    height: 24px;
+}
+        
+
+        @keyframes crawl {
+            0% {
+                top: 100%;
+                transform: rotateX(20deg) translateZ(0);
+            }
+            100% { 
+                top: -100%;
+                transform: rotateX(25deg) translateZ(-2500px);
+            }
+        }
+
+        @media (min-width: 600px) {
+            .crawl-content > .title h1 {
+                font-size: 2em;
+            }
+
+            .crawl-content p {
+                font-size: 1.25em;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .crawl-content > .title h1 {
+                font-size: 3em;
+            }
+
+            .crawl-content p {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="star-wars-container">
+        <div class="crawl-content">
+            <div class="title">
+                <p>Episode I</p>
+                <h1>THE RISE OF RESEARCH COMMUNICATIONS</h1>
+            </div>
+            
+            <p>Three years ago, at a university called XJTLU in the city of Suzhou in China, there was no research communications.</p>
+            
+            <p>The university was unaware of the potential impact that effective research communication could have on its global reputation and academic standing.</p>
+            
+            <p>But a small team of communicators saw the untapped potential and embarked on a mission to transform how XJTLU shared its research with the world...</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            setTimeout(() => {
+                document.querySelector('.crawl-content').style.animation = 'none';
+                document.querySelector('.crawl-content').style.top = '-100%';
+            }, 60000);
+        });
+    </script>
+    <a href="next-page.html" class="next-page-arrow" aria-label="Go to next page">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+</body>
+</html>

@@ -1,0 +1,296 @@
+
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f4f8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-size: 18px; /* Increased base font size */
+    }
+    .container {
+        max-width: 1200px; /* Increased from 1000px */
+        width: 95%;
+        margin: 30px auto; /* Increased from 20px */
+        background-color: white;
+        border-radius: 20px; /* Increased from 15px */
+        box-shadow: 0 0 30px rgba(0,0,0,0.1); /* Increased shadow */
+        padding: 40px; /* Increased from 30px */
+    }
+    h1 {
+        font-size: 3em; /* Increased from 2.5em */
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 40px; /* Increased from 30px */
+        text-transform: uppercase;
+        letter-spacing: 3px; /* Increased from 2px */
+        position: relative;
+        padding-bottom: 20px; /* Increased from 15px */
+    }
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px; /* Increased from 80px */
+        height: 5px; /* Increased from 4px */
+        background: linear-gradient(to right, #3498db, #2ecc71);
+        border-radius: 3px; /* Increased from 2px */
+    }
+    h2 {
+        font-size: 2.2em; /* Increased font size */
+        color: #34495e;
+        text-align: center;
+        margin-bottom: 30px; /* Increased from 20px */
+    }
+    .roadmap {
+        position: relative;
+        width: 100%;
+        height: 300px; /* Increased from 250px */
+        background-color: #ecf0f1;
+        border-radius: 20px; /* Increased from 15px */
+        overflow: hidden;
+        margin-bottom: 40px; /* Increased from 30px */
+    }
+    .road {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 140px;
+        background-color: #34495e;
+        transform: translateY(-50%);
+        overflow: hidden;
+    }
+    
+    .road::before,
+    .road::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 8px; /* Increased from 6px for better visibility */
+        background-color: white;
+    }
+    
+    .road::before {
+        top: 0;
+    }
+    
+    .road::after {
+        bottom: 0;
+    }
+    
+    .dashed-line {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background-image: linear-gradient(to right, #fff 50%, transparent 50%);
+        background-size: 25px 100%;
+        background-repeat: repeat-x;
+        transform: translateY(-50%);
+    }
+    .car {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 120px; /* Increased from 100px */
+        height: auto;
+        transform: translateY(-50%);
+        transition: left 0.1s linear;
+        cursor: pointer;
+        z-index: 10;
+    }
+    .roadblock {
+        position: absolute;
+        top: 50%;
+        width: 100px; /* Increased from 80px */
+        height: 100px; /* Increased from 80px */
+        background-color: #e74c3c;
+        transform: translateY(-50%);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        opacity: 0;
+        z-index: 5;
+        border: 4px solid #c0392b; /* Increased from 3px */
+        border-radius: 50%;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.3); /* Increased shadow */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 30px; /* Increased from 24px */
+        font-weight: bold;
+        color: #fff;
+    }
+    .roadblock:hover {
+        transform: translateY(-50%) scale(1.15); /* Increased scale */
+        box-shadow: 0 8px 16px rgba(0,0,0,0.4); /* Increased shadow */
+    }
+    #roadblock1 { left: 15%; }
+    #roadblock2 { left: 28%; }
+    #roadblock3 { left: 41%; }
+    #roadblock4 { left: 54%; }
+    #roadblock5 { left: 67%; }
+    #roadblock6 { left: 80%; }
+    .finish-line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 25px; /* Increased from 20px */
+        background: repeating-linear-gradient(
+            45deg,
+            #2c3e50,
+            #2c3e50 12px,
+            #fff 12px,
+            #fff 24px
+        );
+        z-index: 5;
+    }
+    .flag {
+        position: absolute;
+        width: 75px; /* Increased from 60px */
+        height: 75px; /* Increased from 60px */
+        top: 15px; /* Adjusted from 10px */
+        right: 35px; /* Adjusted from 30px */
+        display: none;
+        z-index: 15;
+        font-size: 60px; /* Increased from 50px */
+        animation: wave 1s infinite alternate;
+    }
+    @keyframes wave {
+        0% { transform: rotate(-15deg); } /* Increased rotation */
+        100% { transform: rotate(15deg); } /* Increased rotation */
+    }
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.5); /* Increased opacity */
+    }
+    .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto; /* Adjusted from 15% */
+        padding: 30px; /* Increased from 20px */
+        border: 1px solid #888;
+        max-width: 95%;
+        width: auto;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1001;
+        overflow: hidden;
+        font-size: 20px; /* Increased from 18px */
+        font-family: 'Avenir', sans-serif;
+    }
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 36px; /* Increased from 28px */
+        font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .modal-header {
+        text-align: center;
+        padding-bottom: 25px; /* Increased from 20px */
+        border-bottom: 3px solid #ecf0f1; /* Increased from 2px */
+    }
+    .modal-body {
+        padding: 25px 0; /* Increased from 20px */
+        font-size: 26px; /* Increased from 20px */
+    }
+    .modal-footer {
+        text-align: center;
+        padding-top: 25px; /* Increased from 20px */
+        border-top: 3px solid #ecf0f1; /* Increased from 2px */
+    }
+    .btn {
+        padding: 15px 30px; /* Increased from 12px 24px */
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 8px; /* Increased from 5px */
+        cursor: pointer;
+        font-size: 18px; /* Increased from 16px */
+        transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+        background-color: #2980b9;
+    }
+    .hidden {
+        display: none;
+    }
+    .popup-image {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 25px auto; /* Increased from 20px */
+        border: 2px solid #ddd; /* Increased from 1px */
+        border-radius: 6px; /* Increased from 4px */
+        box-shadow: 0 3px 7px rgba(0,0,0,0.1); /* Increased shadow */
+    }
+    .page-arrow {
+        position: fixed;
+        bottom: 30px; /* Increased from 20px */
+        background-color: #3498db;
+        color: white;
+        width: 60px; /* Increased from 50px */
+        height: 60px; /* Increased from 50px */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        box-shadow: 0 3px 7px rgba(0,0,0,0.2); /* Increased shadow */
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .back-arrow {
+        left: 30px; /* Increased from 20px */
+    }
+    .next-arrow {
+        right: 30px; /* Increased from 20px */
+    }
+    .page-arrow:hover {
+        background-color: #2980b9;
+        transform: scale(1.15); /* Increased scale */
+    }
+    .page-arrow svg {
+        width: 30px; /* Increased from 24px */
+        height: 30px; /* Increased from 24px */
+    }
+    @media (max-width: 768px) {
+        .container {
+            padding: 25px; /* Increased from 20px */
+        }
+        h1 {
+            font-size: 2.5em; /* Increased from 2em */
+        }
+        .roadmap {
+            height: 250px; /* Increased from 200px */
+        }
+        .car {
+            width: 100px; /* Increased from 80px */
+        }
+        .roadblock {
+            width: 60px; /* Increased from 50px */
+            height: 60px; /* Increased from 50px */
+            font-size: 24px; /* Increased from 20px */
+        }
+        .modal-content {
+            width: 95%;
+            padding: 25px; /* Increased from 20px */
+        }
+    }
