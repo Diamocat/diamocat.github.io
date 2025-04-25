@@ -1,0 +1,300 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Popularisation in China Timeline</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Avenir', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            font-size: 18px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 300;
+        }
+        .title-underline {
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 40px;
+        }
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: #2c3e50;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+        .timeline-item {
+            padding: 20px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: #fff;
+            border: 3px solid #2c3e50;
+            top: 22px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .left {
+            left: 0;
+        }
+        .right {
+            left: 50%;
+        }
+        .left::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            right: 30px;
+            border: medium solid #2c3e50;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent #2c3e50;
+        }
+        .right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            left: 30px;
+            border: medium solid #2c3e50;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent #2c3e50 transparent transparent;
+        }
+        .right::after {
+            left: -10px;
+        }
+        .content {
+            padding: 30px;
+            background-color: #fff;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 22px; /* Increased font size for content text */
+            line-height: 1.5; /* Adjusted line height for better readability */
+        }
+        .year {
+            font-weight: bold;
+            color: #2c3e50;
+            display: block;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        .image-placeholder {
+            background-color: #e0e0e0;
+            width: 100%;
+            padding-top: 56.25%;
+            position: relative;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .image-placeholder::after {
+            content: 'Image Placeholder';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            color: #777;
+        }
+        .page-arrow {
+            position: fixed;
+            bottom: 40px;
+            background-color: #3498db;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .back-arrow {
+            left: 40px;
+        }
+        
+        .next-arrow {
+            right: 40px;
+        }
+        
+        .page-arrow:hover {
+            background-color: #2980b9;
+            transform: scale(1.1);
+        }
+        
+        .page-arrow svg {
+            width: 30px;
+            height: 30px;
+        }
+        @media screen and (max-width: 768px) {
+            body {
+                font-size: 16px;
+                padding: 20px 10px;
+            }
+            h1 {
+                font-size: 32px;
+            }
+            h2 {
+                font-size: 26px;
+            }
+            .subtitle {
+                font-size: 20px;
+            }
+            .year {
+                font-size: 24px;
+            }
+            .timeline::before {
+                left: 31px;
+            }
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            .timeline-item::before {
+                left: 60px;
+                border: medium solid #2c3e50;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent #2c3e50 transparent transparent;
+            }
+            .left::after, .right::after {
+                left: 15px;
+            }
+            .right {
+                left: 0%;
+            }
+            .page-arrow {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+            }
+            .back-arrow {
+                left: 20px;
+            }
+            .next-arrow {
+                right: 20px;
+            }
+            .page-arrow svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Science popularisation in China timeline</h1>
+    <p class="subtitle">科普 (Kēpǔ)</p>
+    <div class="title-underline"></div>
+    
+    <div class="timeline">
+        <div class="timeline-item left">
+            <div class="content">
+                <span class="year">1940s-1965</span>
+                
+                <img src="100000whys.JPG" alt="Description of the image" style="width: 100%;height: auto;">
+                <p>Early efforts in science popularisation and foundation building</p>
+            </div>
+        </div>
+        <div class="timeline-item right">
+            <div class="content">
+                <span class="year">1966-1976</span>
+                <img src="1975.jpg" alt="Description of the image" style="width: 100%; height: auto;">
+                <p>Cultural Revolution disrupts scientific progress</p>
+            </div>
+        </div>
+        <div class="timeline-item left">
+            <div class="content">
+                <span class="year">1977-1989</span>
+                <img src="1978poster.jpg" alt="Description of the image" style="width: 100%; height: auto;">
+                <p>Reform and Opening Up: Renewed focus on science and technology</p>
+            </div>
+        </div>
+        <div class="timeline-item right">
+            <div class="content">
+                <span class="year">1990-2009</span>
+                <img src="2010.jpg" alt="Description of the image" style="width: 100%; height: auto;">
+                <p>Increased science communication efforts and establishment of legal framework</p>
+            </div>
+        </div>
+        <div class="timeline-item left">
+            <div class="content">
+                <span class="year">2010-Present</span>
+                <img src="2020.jpg" alt="Description of the image" style="width: 100%; height: auto;">
+                <p>Digital era and government push for science literacy</p>
+            </div>
+        </div>
+        <br>
+        <br>
+        <p>Refs: Yin Lin, Li Honglin, (2020) Communicating Science: A Global Perspective
+             <br> <a href="ncbi.nlm.nih.gov/pmc/PMC8288998/">Jane Qiu (2020) Science Communication in China: A critical component of the global powerhouse</a> </p>
+    </div>
+
+
+    
+    <a href="../research-strategy-presentation.html" class="page-arrow back-arrow" aria-label="Go to previous page">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+    
+    <a href="roadmap.html" class="page-arrow next-arrow" aria-label="Go to next page">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+</body>
+</html>
