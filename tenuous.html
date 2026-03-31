@@ -158,7 +158,9 @@
   .toast {
     position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
     padding: 0.75rem 1.25rem; border-radius: 8px; font-size: 0.875rem; font-weight: 500;
-    z-index: 999; pointer-events: none; white-space: nowrap;
+    z-index: 999; pointer-events: none;
+    max-width: calc(100vw - 2rem); width: max-content;
+    text-align: center; line-height: 1.4;
     animation: toastIn 0.3s ease, toastOut 0.4s ease 2.6s forwards;
     box-shadow: 0 4px 16px rgba(0,0,0,0.15);
   }
