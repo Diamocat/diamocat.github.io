@@ -262,7 +262,6 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getAuth, signInAnonymously, inMemoryPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, arrayUnion, serverTimestamp, deleteField } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -275,7 +274,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 const db = getFirestore(app);
 
 // ─── WORD BANK ───────────────────────────────────────────────────────────────
@@ -368,18 +366,9 @@ function genRoomCode() {
   return `${word}-${num}`;
 }
 
-// ─── AUTH ─────────────────────────────────────────────────────────────────────
-setPersistence(auth, inMemoryPersistence)
-  .then(() => signInAnonymously(auth))
-  .then(cred => {
-    myUid = cred.user.uid;
-    show('entry');
-  }).catch(err => {
-    document.getElementById('loading').innerHTML = `<div style="text-align:center;padding:2rem;max-width:400px;">
-      <p style="color:var(--rust);font-weight:500;margin-bottom:0.5rem;">Connection failed</p>
-      <p style="color:var(--muted);font-size:0.8rem;">${err.code}: ${err.message}</p>
-    </div>`;
-  });
+// ─── AUTH — simple random ID, no Firebase Auth needed ─────────────────────────
+myUid = 'u_' + Math.random().toString(36).slice(2, 9) + Math.random().toString(36).slice(2, 9);
+show('entry');
 
 // ─── ENTRY ────────────────────────────────────────────────────────────────────
 window.createRoom = async function() {
