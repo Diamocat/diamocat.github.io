@@ -262,12 +262,12 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import { getFirestore, doc, collection, setDoc, getDoc, updateDoc, onSnapshot, arrayUnion, serverTimestamp, deleteField } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getAuth, signInAnonymously, inMemoryPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, arrayUnion, serverTimestamp, deleteField } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDHoFUibZCq--4YqXlM44fPkXTVshz0d6g",
-  authDomain: "diamocat.github.io",
+  authDomain: "tenuous-a1eab.firebaseapp.com",
   projectId: "tenuous-a1eab",
   storageBucket: "tenuous-a1eab.firebasestorage.app",
   messagingSenderId: "713565374333",
@@ -369,15 +369,17 @@ function genRoomCode() {
 }
 
 // ─── AUTH ─────────────────────────────────────────────────────────────────────
-signInAnonymously(auth).then(cred => {
-  myUid = cred.user.uid;
-  show('entry');
-}).catch(err => {
-  document.getElementById('loading').innerHTML = `<div style="text-align:center;padding:2rem;max-width:400px;">
-    <p style="color:var(--rust);font-weight:500;margin-bottom:0.5rem;">Connection failed</p>
-    <p style="color:var(--muted);font-size:0.8rem;">${err.code}: ${err.message}</p>
-  </div>`;
-});
+setPersistence(auth, inMemoryPersistence)
+  .then(() => signInAnonymously(auth))
+  .then(cred => {
+    myUid = cred.user.uid;
+    show('entry');
+  }).catch(err => {
+    document.getElementById('loading').innerHTML = `<div style="text-align:center;padding:2rem;max-width:400px;">
+      <p style="color:var(--rust);font-weight:500;margin-bottom:0.5rem;">Connection failed</p>
+      <p style="color:var(--muted);font-size:0.8rem;">${err.code}: ${err.message}</p>
+    </div>`;
+  });
 
 // ─── ENTRY ────────────────────────────────────────────────────────────────────
 window.createRoom = async function() {
