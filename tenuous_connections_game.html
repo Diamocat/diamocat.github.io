@@ -368,7 +368,8 @@ function genRoomCode() {
 
 // ─── AUTH — simple random ID, no Firebase Auth needed ─────────────────────────
 myUid = 'u_' + Math.random().toString(36).slice(2, 9) + Math.random().toString(36).slice(2, 9);
-show('entry');
+document.getElementById('loading').innerHTML = '<span style="color:green">UID generated: ' + myUid + ' — loading entry screen...</span>';
+setTimeout(() => show('entry'), 500);
 
 // ─── ENTRY ────────────────────────────────────────────────────────────────────
 window.createRoom = async function() {
