@@ -267,7 +267,7 @@ import { getFirestore, doc, collection, setDoc, getDoc, updateDoc, onSnapshot, a
 
 const firebaseConfig = {
   apiKey: "AIzaSyDHoFUibZCq--4YqXlM44fPkXTVshz0d6g",
-  authDomain: "tenuous-a1eab.firebaseapp.com",
+  authDomain: "diamocat.github.io",
   projectId: "tenuous-a1eab",
   storageBucket: "tenuous-a1eab.firebasestorage.app",
   messagingSenderId: "713565374333",
@@ -373,7 +373,10 @@ signInAnonymously(auth).then(cred => {
   myUid = cred.user.uid;
   show('entry');
 }).catch(err => {
-  document.getElementById('loading').innerHTML = `<span style="color:var(--rust)">Connection failed: ${err.message}</span>`;
+  document.getElementById('loading').innerHTML = `<div style="text-align:center;padding:2rem;max-width:400px;">
+    <p style="color:var(--rust);font-weight:500;margin-bottom:0.5rem;">Connection failed</p>
+    <p style="color:var(--muted);font-size:0.8rem;">${err.code}: ${err.message}</p>
+  </div>`;
 });
 
 // ─── ENTRY ────────────────────────────────────────────────────────────────────
