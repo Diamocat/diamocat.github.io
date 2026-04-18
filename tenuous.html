@@ -794,7 +794,6 @@ function renderPlayArea() {
           <button class="btn-cant-go" style="flex:2;" onclick="cantGo()">I can't go — pick up a card and pass</button>
           <button class="btn-cant-go" style="flex:1;border-color:var(--rust);color:var(--rust);" onclick="challengeWord()">🔄 Replace word</button>
         </div>`;
-      selectedCards = selectedCards.filter(i => i < myHand.length);
     } else {
       const cp = gs.players[gs.currentPlayer];
       el.innerHTML = `${failedWarning}<div class="not-your-turn"><strong>${cp ? cp.name : '...'} is thinking...</strong><span class="spinner"></span>Waiting for their move</div>`;
@@ -896,13 +895,19 @@ function renderHistory() {
 }
 
 // ─── GAME ACTIONS ─────────────────────────────────────────────────────────────
+let _pendingCard = null;
+
 window.selectCard = function(i) {
   const card = myHand[i];
   if (!card) return;
-  // Toggle — deselect if already selected, otherwise select
-  selectedCards = selectedCards.includes(i) ? [] : [i];
+  if (selectedCards.includes(i)) {
+    selectedCards = [];
+    _pendingCard = null;
+  } else {
+    selectedCards = [i];
+    _pendingCard = card.type === 'word' ? { idx: i, word: card.word } : null;
+  }
   renderPlayArea();
-  // For special cards, populate action area
   if (selectedCards.length > 0 && card.type !== 'word') {
     const area = document.getElementById('action-area');
     if (!area) return;
@@ -915,28 +920,27 @@ window.selectCard = function(i) {
   }
 };
 
-window.clearSelection = function() { selectedCards = []; renderPlayArea(); };
+window.clearSelection = function() { selectedCards = []; _pendingCard = null; renderPlayArea(); };
 
 window.submitCard = async function() {
-  if (selectedCards.length === 0) return;
-  const i = selectedCards[0];
-  const card = myHand[i];
-  if (!card || card.type !== 'word') return;
+  const pending = _pendingCard || (selectedCards.length > 0 ? { word: myHand[selectedCards[0]]?.word } : null);
+  if (!pending || !pending.word) return;
   const reason = gameState.gameMode === 'text'
     ? (document.getElementById('reason-input')||{}).value||''
     : null;
-  if (gameState.gameMode === 'text' && !reason.trim()) return;
+  if (gameState.gameMode === 'text' && !(reason||'').trim()) return;
   await updateDoc(roomRef(roomId), {
     phase: 'vote',
     pendingPlay: {
       from: gameState.tableWord,
-      card: card.word,
+      card: pending.word,
       reason: reason ? reason.trim() : null,
     },
     chainQueue: [],
     votes: {}, voteResolved: false
   });
   selectedCards = [];
+  _pendingCard = null;
 };
 
 window.submitChain = async function() {
