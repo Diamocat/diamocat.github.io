@@ -917,6 +917,28 @@ window.selectCard = function(i) {
 
 window.clearSelection = function() { selectedCards = []; renderPlayArea(); };
 
+window.submitCard = async function() {
+  if (selectedCards.length === 0) return;
+  const i = selectedCards[0];
+  const card = myHand[i];
+  if (!card || card.type !== 'word') return;
+  const reason = gameState.gameMode === 'text'
+    ? (document.getElementById('reason-input')||{}).value||''
+    : null;
+  if (gameState.gameMode === 'text' && !reason.trim()) return;
+  await updateDoc(roomRef(roomId), {
+    phase: 'vote',
+    pendingPlay: {
+      from: gameState.tableWord,
+      card: card.word,
+      reason: reason ? reason.trim() : null,
+    },
+    chainQueue: [],
+    votes: {}, voteResolved: false
+  });
+  selectedCards = [];
+};
+
 window.submitChain = async function() {
   if (selectedCards.length === 0) return;
   const cards = selectedCards.map(i => ({idx:i, word:myHand[i].word}));
