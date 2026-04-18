@@ -229,7 +229,7 @@
           <div style="background:#f5f0e8;border-radius:5px;padding:6px 8px;font-size:0.75rem;line-height:1.4;">↑1 <strong>Pick up 1</strong> — choose a player to draw 1 card</div>
         </div>
         <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#7a7060;font-weight:500;margin-bottom:5px;">Stuck on a word?</div>
-        <div style="font-size:0.8rem;line-height:1.8;color:#1a1410;margin-bottom:0.9rem;">• After 3 failed turns it changes automatically<br>• Any player can vote to replace it early</div>
+        <div style="font-size:0.8rem;line-height:1.8;color:#1a1410;margin-bottom:0.9rem;">• After 3 failed turns per player it changes automatically<br>• Any player can vote to replace it early</div>
         <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#7a7060;font-weight:500;margin-bottom:5px;">Scoring</div>
         <div style="font-size:0.8rem;line-height:1.8;color:#1a1410;">• Winner scores points equal to cards held by others<br>• Scores carry over between rounds</div>
       </div>
@@ -749,7 +749,7 @@ function renderPlayArea() {
   if (gs.phase === 'play') {
     const failedTurns = gs.failedTurns || 0;
     const numPlayers = (gs.playerOrder||[]).length;
-    const threshold = numPlayers * 2;
+    const threshold = numPlayers * 3;
     const failedWarning = failedTurns > 0 ? `<div style="font-size:11px;color:var(--rust);margin-bottom:8px;padding:6px 8px;background:var(--rust-light);border-radius:4px;">⚠️ ${failedTurns}/${threshold} failed turn${failedTurns>1?'s':''} on this word${failedTurns>=threshold-1?' — one more and it changes automatically!':''}</div>` : '';
     if (isMyTurn) {
       // Build action area content if a word card is already selected
@@ -1084,14 +1084,14 @@ async function resolveVote(data, passed) {
       const newHand = [...currentHand, drawn];
       await setDoc(handRef(roomId, currentUid), { cards: newHand });
       newHistory.unshift({ text:`${p.from} → ${p.card} (rejected — picked up 1)`, detail:`${p.reason?`"${p.reason}" — `:''}${data.players[currentUid]?.name}` });
-      if (newFailedTurns >= (data.playerOrder||[]).length * 2) {
+      if (newFailedTurns >= (data.playerOrder||[]).length * 3) {
         await autoReplaceWord(data, { deck, history:newHistory, [`players.${currentUid}.cardCount`]: newHand.length });
       } else {
         await advanceTurn(data, { deck, history:newHistory, [`players.${currentUid}.cardCount`]: newHand.length, chainQueue:[], failedTurns: newFailedTurns });
       }
     } else {
       newHistory.unshift({ text:`${p.from} → ${p.card} (rejected)`, detail:`${data.players[currentUid]?.name}` });
-      if (newFailedTurns >= (data.playerOrder||[]).length * 2) {
+      if (newFailedTurns >= (data.playerOrder||[]).length * 3) {
         await autoReplaceWord(data, { history:newHistory });
       } else {
         await advanceTurn(data, { history:newHistory, chainQueue:[], failedTurns: newFailedTurns });
@@ -1216,7 +1216,7 @@ window.cantGo = async function() {
   const newHand = [...myHand];
   if (deck.length > 0) { newHand.push(deck.pop()); }
   await setDoc(handRef(roomId, myUid), { cards: newHand });
-  if (newFailedTurns >= (data.playerOrder||[]).length * 2) {
+  if (newFailedTurns >= (data.playerOrder||[]).length * 3) {
     await autoReplaceWord(data, { deck, history, [`players.${myUid}.cardCount`]: newHand.length });
   } else {
     await advanceTurn(data, { deck, history, [`players.${myUid}.cardCount`]: newHand.length, failedTurns: newFailedTurns });
