@@ -271,17 +271,12 @@
 <div id="game" class="screen">
   <div class="game-header">
     <div class="game-logo">Tenuous<span>.</span></div>
-    <div style="display:flex;align-items:center;gap:10px;">
+    <div style="display:flex;align-items:center;gap:8px;">
       <span id="mode-indicator" style="font-size:11px;color:var(--muted);"></span>
       <span style="font-size:11px;color:var(--muted);">Round <span id="round-num">1</span></span>
       <span id="room-badge" style="font-size:11px;color:var(--muted);background:var(--cream);padding:2px 8px;border-radius:20px;"></span>
-      <div style="position:relative;">
-        <button id="menu-btn" onclick="toggleGameMenu()" style="background:none;border:1px solid var(--border-strong);border-radius:4px;padding:3px 8px;cursor:pointer;font-size:0.75rem;color:var(--muted);font-family:'DM Sans',sans-serif;">Menu</button>
-        <div id="game-menu" style="display:none;position:absolute;right:0;top:calc(100% + 4px);background:white;border:1px solid var(--border-strong);border-radius:6px;padding:4px;min-width:150px;z-index:20;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-          <button onclick="closeGameMenu();location.reload();" style="display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.85rem;color:var(--ink);border-radius:4px;" onmouseover="this.style.background='var(--cream)'" onmouseout="this.style.background='none'">🔄 Refresh page</button>
-          <button onclick="closeGameMenu();leaveRoom();" style="display:block;width:100%;text-align:left;padding:8px 12px;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.85rem;color:var(--rust);border-radius:4px;" onmouseover="this.style.background='var(--rust-light)'" onmouseout="this.style.background='none'">← Leave room</button>
-        </div>
-      </div>
+      <button onclick="location.reload()" style="background:none;border:1px solid var(--border-strong);border-radius:4px;padding:3px 7px;cursor:pointer;font-size:0.75rem;color:var(--muted);font-family:'DM Sans',sans-serif;" title="Refresh page">🔄</button>
+      <button onclick="leaveRoom()" style="background:none;border:1px solid var(--border-strong);border-radius:4px;padding:3px 7px;cursor:pointer;font-size:0.75rem;color:var(--rust);font-family:'DM Sans',sans-serif;" title="Leave room">← Leave</button>
     </div>
   </div>
   <div class="game-body">
@@ -411,24 +406,6 @@ function show(id) {
   el.classList.add('active');
   el.style.display = FLEX_SCREENS.includes(id) ? 'flex' : 'block';
 }
-
-window.toggleGameMenu = function() {
-  const menu = document.getElementById('game-menu');
-  if (menu) menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-};
-
-window.closeGameMenu = function() {
-  const menu = document.getElementById('game-menu');
-  if (menu) menu.style.display = 'none';
-};
-
-document.addEventListener('click', function(e) {
-  const menu = document.getElementById('game-menu');
-  const btn = document.getElementById('menu-btn');
-  if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
-    menu.style.display = 'none';
-  }
-});
 
 function showToast(message, type='info') {
   const existing = document.querySelector('.toast');
