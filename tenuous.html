@@ -766,7 +766,7 @@ function renderPlayArea() {
               <span class="to-word">${selCard.word}</span>
             </div>
             <p style="font-size:0.825rem;color:var(--muted);margin-bottom:0.75rem;">Say your connection out loud, then put it to the vote.</p>
-            <button class="btn-submit" onclick="submitCard()">Put to the vote</button>
+            <button class="btn-submit" onclick="submitCard()">Submit</button>
           </div>`;
         } else {
           actionHTML = `<div class="action-box">
@@ -923,12 +923,14 @@ window.selectCard = function(i) {
 window.clearSelection = function() { selectedCards = []; _pendingCard = null; renderPlayArea(); };
 
 window.submitCard = async function() {
+  console.log('submitCard called', '_pendingCard:', _pendingCard, 'selectedCards:', selectedCards, 'gameMode:', gameState?.gameMode);
   const pending = _pendingCard || (selectedCards.length > 0 ? { word: myHand[selectedCards[0]]?.word } : null);
-  if (!pending || !pending.word) return;
+  if (!pending || !pending.word) { alert('No card selected — _pendingCard: ' + JSON.stringify(_pendingCard) + ' selectedCards: ' + JSON.stringify(selectedCards)); return; }
   const reason = gameState.gameMode === 'text'
     ? (document.getElementById('reason-input')||{}).value||''
     : null;
-  if (gameState.gameMode === 'text' && !(reason||'').trim()) return;
+  if (gameState.gameMode === 'text' && !(reason||'').trim()) { alert('No reason entered'); return; }
+  console.log('Submitting:', pending.word, 'reason:', reason);
   await updateDoc(roomRef(roomId), {
     phase: 'vote',
     pendingPlay: {
