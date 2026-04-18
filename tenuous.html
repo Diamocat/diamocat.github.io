@@ -746,8 +746,39 @@ function renderPlayArea() {
 
   if (gs.phase === 'play') {
     const failedTurns = gs.failedTurns || 0;
-    const failedWarning = failedTurns > 0 ? `<div style="font-size:11px;color:var(--rust);margin-bottom:8px;padding:6px 8px;background:var(--rust-light);border-radius:4px;">⚠️ ${failedTurns}/3 failed turn${failedTurns>1?'s':''} on this word${failedTurns>=2?' — one more and it changes automatically!':''}</div>` : '';
+    const numPlayers = (gs.playerOrder||[]).length;
+    const threshold = numPlayers * 2;
+    const failedWarning = failedTurns > 0 ? `<div style="font-size:11px;color:var(--rust);margin-bottom:8px;padding:6px 8px;background:var(--rust-light);border-radius:4px;">⚠️ ${failedTurns}/${threshold} failed turn${failedTurns>1?'s':''} on this word${failedTurns>=threshold-1?' — one more and it changes automatically!':''}</div>` : '';
     if (isMyTurn) {
+      // Build action area content if a word card is already selected
+      const selIdx = selectedCards.length > 0 ? selectedCards[0] : -1;
+      const selCard = selIdx >= 0 ? myHand[selIdx] : null;
+      let actionHTML = '';
+      if (selCard && selCard.type === 'word') {
+        if (gs.gameMode === 'facetime') {
+          actionHTML = `<div class="action-box">
+            <div class="section-label">Playing</div>
+            <div class="connection-from-to">
+              <span class="from-word">${gs.tableWord}</span>
+              <span class="conn-arrow">→</span>
+              <span class="to-word">${selCard.word}</span>
+            </div>
+            <p style="font-size:0.825rem;color:var(--muted);margin-bottom:0.75rem;">Say your connection out loud, then put it to the vote.</p>
+            <button class="btn-submit" onclick="submitCard()">Put to the vote</button>
+          </div>`;
+        } else {
+          actionHTML = `<div class="action-box">
+            <div class="section-label">Your connection</div>
+            <div class="connection-from-to">
+              <span class="from-word">${gs.tableWord}</span>
+              <span class="conn-arrow">→</span>
+              <span class="to-word">${selCard.word}</span>
+            </div>
+            <textarea id="reason-input" rows="2" placeholder="Explain the (tenuous) connection..."></textarea>
+            <button class="btn-submit" onclick="submitCard()">Submit connection</button>
+          </div>`;
+        }
+      }
       el.innerHTML = `
         ${failedWarning}
         <div class="section-label">Your hand — tap a card to play</div>
@@ -756,7 +787,7 @@ function renderPlayArea() {
           if (c.type!=='word') return `<div class="card special ${SPECIALS[c.type].cls}${isSel?' selected':''}" id="card-${i}" onclick="selectCard(${i})"><span class="c-icon">${SPECIALS[c.type].icon}</span><span class="c-label">${SPECIALS[c.type].label}</span></div>`;
           return `<div class="card word-card${isSel?' selected':''}" id="card-${i}" onclick="selectCard(${i})">${c.word}</div>`;
         }).join('')}</div></div>
-        <div id="action-area"></div>
+        <div id="action-area">${actionHTML}</div>
         <div style="display:flex;gap:8px;margin-top:0.5rem;">
           <button class="btn-cant-go" style="flex:2;" onclick="cantGo()">I can't go — pick up a card and pass</button>
           <button class="btn-cant-go" style="flex:1;border-color:var(--rust);color:var(--rust);" onclick="challengeWord()">🔄 Replace word</button>
@@ -866,9 +897,11 @@ function renderHistory() {
 window.selectCard = function(i) {
   const card = myHand[i];
   if (!card) return;
-  if (card.type !== 'word') {
-    selectedCards = [i];
-    renderPlayArea();
+  // Toggle — deselect if already selected, otherwise select
+  selectedCards = selectedCards.includes(i) ? [] : [i];
+  renderPlayArea();
+  // For special cards, populate action area
+  if (selectedCards.length > 0 && card.type !== 'word') {
     const area = document.getElementById('action-area');
     if (!area) return;
     const s = SPECIALS[card.type];
@@ -877,15 +910,7 @@ window.selectCard = function(i) {
       <p class="special-desc-text">${s.desc}</p>
       <button class="btn-special-play" onclick="playSpecial()">Play this card</button>
     </div>`;
-    return;
   }
-  const idx = selectedCards.indexOf(i);
-  if (idx > -1) { selectedCards.splice(idx,1); }
-  else {
-    // Only one word card at a time
-    selectedCards = [i];
-  }
-  renderPlayArea();
 };
 
 window.clearSelection = function() { selectedCards = []; renderPlayArea(); };
@@ -1029,14 +1054,14 @@ async function resolveVote(data, passed) {
       const newHand = [...currentHand, drawn];
       await setDoc(handRef(roomId, currentUid), { cards: newHand });
       newHistory.unshift({ text:`${p.from} → ${p.card} (rejected — picked up 1)`, detail:`${p.reason?`"${p.reason}" — `:''}${data.players[currentUid]?.name}` });
-      if (newFailedTurns >= 3) {
+      if (newFailedTurns >= (data.playerOrder||[]).length * 2) {
         await autoReplaceWord(data, { deck, history:newHistory, [`players.${currentUid}.cardCount`]: newHand.length });
       } else {
         await advanceTurn(data, { deck, history:newHistory, [`players.${currentUid}.cardCount`]: newHand.length, chainQueue:[], failedTurns: newFailedTurns });
       }
     } else {
       newHistory.unshift({ text:`${p.from} → ${p.card} (rejected)`, detail:`${data.players[currentUid]?.name}` });
-      if (newFailedTurns >= 3) {
+      if (newFailedTurns >= (data.playerOrder||[]).length * 2) {
         await autoReplaceWord(data, { history:newHistory });
       } else {
         await advanceTurn(data, { history:newHistory, chainQueue:[], failedTurns: newFailedTurns });
@@ -1161,7 +1186,7 @@ window.cantGo = async function() {
   const newHand = [...myHand];
   if (deck.length > 0) { newHand.push(deck.pop()); }
   await setDoc(handRef(roomId, myUid), { cards: newHand });
-  if (newFailedTurns >= 3) {
+  if (newFailedTurns >= (data.playerOrder||[]).length * 2) {
     await autoReplaceWord(data, { deck, history, [`players.${myUid}.cardCount`]: newHand.length });
   } else {
     await advanceTurn(data, { deck, history, [`players.${myUid}.cardCount`]: newHand.length, failedTurns: newFailedTurns });
