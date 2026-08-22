@@ -71,13 +71,13 @@ Poll every 5-10 seconds until status is `COMPLETED`. Video jobs can take 1-5 min
 curl -s "https://queue.fal.run/<MODEL_ID>/requests/<REQUEST_ID>" \
   -H "Authorization: Key $FAL_KEY"
 ```
-The result JSON contains output URLs (`images[].url` or `video.url`). Download the file with `curl -o`, save it to `/mnt/user-data/outputs/`, and present it to the user with `present_files`.
+The result JSON contains output URLs (`images[].url` or `video.url`). Download the file with `curl -o`, save it to an `outputs/` folder in the working directory (create it if needed; do not commit it), and present it to the user (in Claude Code, send it with the SendUserFile tool).
 
 ---
 
 ## STEP 1 — Brief intake (single message, all at once)
 
-Ask all intake questions in **one message** using `ask_user_input_v0`. Do not split into multiple questions.
+Ask all intake questions in **one message** (in Claude Code, use the AskUserQuestion tool with multiple questions in a single call). Do not split into multiple rounds.
 
 Questions to ask simultaneously:
 
@@ -115,10 +115,10 @@ Save all answers before proceeding.
 
 Ask them to upload the file directly in chat. Accept PNG, JPG, SVG, or any image.
 
-Once uploaded, the file is available at `/mnt/user-data/uploads/`. To pass it to fal.ai, convert it to a base64 data URI (fal accepts data URIs anywhere an `image_url` is expected):
+Once uploaded, use the file path shown in the conversation (in Claude Code, uploads arrive as a local file path). To pass it to fal.ai, convert it to a base64 data URI (fal accepts data URIs anywhere an `image_url` is expected):
 
 ```bash
-IMG_B64=$(base64 -w 0 /mnt/user-data/uploads/<file>)
+IMG_B64=$(base64 -w 0 <uploaded_file_path>)
 DATA_URI="data:image/png;base64,$IMG_B64"
 ```
 
@@ -247,7 +247,7 @@ Input JSON shape (adjust field names to the chosen model's schema):
 
 If the model caps duration below the requested length (most cap at 5-10s), generate the longest supported clip and tell the user; offer to generate an extension clip and stitch with `ffmpeg` if 15s was requested.
 
-Poll until `COMPLETED`, download `video.url` with `curl -o`, save the .mp4 to `/mnt/user-data/outputs/`, and present it with `present_files`.
+Poll until `COMPLETED`, download `video.url` with `curl -o`, save the .mp4 to the `outputs/` folder, and present it to the user (in Claude Code, send it with the SendUserFile tool).
 
 ---
 
